@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/tt_custserv
+    username: postgres
+    password: 123
+  flyway:
+    enabled: false
