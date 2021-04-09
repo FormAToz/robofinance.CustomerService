@@ -1,18 +1,32 @@
 package test_task.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
 public class Address {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,9 +44,36 @@ public class Address {
     @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private LocalDateTime modified;
 
-    @OneToMany(mappedBy = "registeredAddress", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Customer> registeredCustomers;
 
-    @OneToMany(mappedBy = "actualAddress", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Customer> actualCustomers;
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s, %s, %s, %s",
+                this.country, this.region, this.city, this.street, this.house, this.flat);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return id.equals(address.id) &&
+                country.equals(address.country) &&
+                region.equals(address.region) &&
+                city.equals(address.city) &&
+                street.equals(address.street) &&
+                house.equals(address.house) &&
+                flat.equals(address.flat);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country, region, city, street, house, flat);
+    }
 }

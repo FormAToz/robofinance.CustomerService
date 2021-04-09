@@ -1,36 +1,43 @@
 package test_task.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import test_task.api.request.AddressRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RestController;
 import test_task.api.request.CustomerRequest;
 import test_task.api.request.FirstAndLastNameRequest;
+import test_task.model.Customer;
+import test_task.service.CustomerService;
 
-@Controller
-public class CustomerController {
+import java.util.List;
+
+@RestController
+class CustomerController {
+    private final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
+
+    @GetMapping()
+    public List<Customer> getAllCustomers() {
+        return customerService.getAllCustomers();
+    }
 
     @PostMapping("/add")
-    public String addCustomer(CustomerRequest request) {
-        return null;
+    public ResponseEntity<Customer> addCustomer(CustomerRequest request) {
+        return new ResponseEntity<>(customerService.addCustomer(request), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public String updateCustomer(CustomerRequest request) {
-        return null;
+    @PutMapping("/update")
+    public ResponseEntity<Customer> updateCustomer(CustomerRequest request) {
+        return new ResponseEntity<>(customerService.updateCustomer(request), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public String getCustomerById(@PathVariable long id) {
-        return null;
-    }
-
-    @GetMapping("/address")
-    public String getCustomerByActualAddress(AddressRequest request) {
-        return null;
-    }
-
-    @GetMapping("/name")
-    public String getCustomerByFirstNameAndLastName(FirstAndLastNameRequest request) {
-        return null;
+    @GetMapping("/search")
+    public ResponseEntity<Customer> searchCustomer(FirstAndLastNameRequest request) {
+        return new ResponseEntity<>(customerService.getByFirstNameAndLastName(request), HttpStatus.OK);
     }
 }
