@@ -2,8 +2,6 @@ package test_task.api.request;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class AddressRequest {
     private String country;
@@ -12,6 +10,10 @@ public class AddressRequest {
     private String street;
     private String house;
     private String flat;
-    private LocalDateTime created;
-    private LocalDateTime modified;
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s, %s, %s, %s, %s",
+                country, region, city, street, house, flat);
+    }
 }

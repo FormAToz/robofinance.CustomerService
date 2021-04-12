@@ -15,7 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
     Optional<Customer> findByFirstNameAndLastNameIgnoreCase(String firstName, String lastName);
 
-    Optional<Customer> findByFirstNameAndMiddleNameAndLastNameAndSexAndRegisteredAddress(
+    Optional<Customer> findByFirstNameIgnoreCaseAndMiddleNameIgnoreCaseAndLastNameIgnoreCaseAndSexAndRegisteredAddress(
             String firstName,
             String middleName,
             String lastName,

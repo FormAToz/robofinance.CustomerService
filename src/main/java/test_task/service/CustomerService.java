@@ -66,14 +66,15 @@ public class CustomerService {
 
     public Customer getByFullNameAndSexAndRegisteredAddress(CustomerRequest request) {
         String error = String.format(
-                "Клиент %s %s %s не существует",
+                "Клиент %s %s %s, с адресом регистрации(%s) не существует",
                 request.getLastName(),
                 request.getFirstName(),
-                request.getMiddleName());
+                request.getMiddleName(),
+                request.getRegisteredAddress());
         Address registeredAddress = addressService.getFromAddressRequest(request.getRegisteredAddress());
 
         return customerRepository
-                .findByFirstNameAndMiddleNameAndLastNameAndSexAndRegisteredAddress(
+                .findByFirstNameIgnoreCaseAndMiddleNameIgnoreCaseAndLastNameIgnoreCaseAndSexAndRegisteredAddress(
                         request.getFirstName(),
                         request.getMiddleName(),
                         request.getLastName(),
@@ -83,8 +84,8 @@ public class CustomerService {
     }
 
     public Customer addCustomer(CustomerRequest request) {
-        Address registeredAddress = addressService.saveFromAddressRequest(request.getRegisteredAddress());
-        Address actualAddress = addressService.saveFromAddressRequest(request.getActualAddress());
+        Address registeredAddress = addressService.saveNewFromAddressRequest(request.getRegisteredAddress());
+        Address actualAddress = addressService.saveNewFromAddressRequest(request.getActualAddress());
 
         Customer customer = Customer.builder()
                 .registeredAddress(registeredAddress)
@@ -103,7 +104,7 @@ public class CustomerService {
      */
     public Customer updateCustomer(CustomerRequest request) {
         Customer currentCustomer = getByFullNameAndSexAndRegisteredAddress(request);
-        Address newActualAddress = addressService.getFromAddressRequest(request.getActualAddress());
+        Address newActualAddress = addressService.updateFromAddressRequest(request.getActualAddress());
 
         currentCustomer.setActualAddress(newActualAddress);
         return customerRepository.save(currentCustomer);

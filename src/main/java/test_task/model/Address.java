@@ -1,6 +1,7 @@
 package test_task.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -55,7 +57,7 @@ public class Address {
     @Override
     public String toString() {
         return String.format("%s, %s, %s, %s, %s, %s",
-                this.country, this.region, this.city, this.street, this.house, this.flat);
+                country, region, city, street, house, flat);
     }
 
     @Override
