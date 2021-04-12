@@ -29,7 +29,6 @@ class CustomerController {
 
     @PostMapping("/add")
     public ResponseEntity<Customer> addCustomer(@RequestBody CustomerRequest request) {
-        System.out.println(request);
         return new ResponseEntity<>(customerService.addCustomer(request), HttpStatus.OK);
     }
 

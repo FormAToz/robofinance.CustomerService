@@ -6,11 +6,8 @@ import test_task.api.request.CustomerRequest;
 import test_task.api.request.FirstAndLastNameRequest;
 import test_task.model.Address;
 import test_task.model.Customer;
-import test_task.model.enums.Sex;
 import test_task.repository.CustomerRepository;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,45 +17,6 @@ public class CustomerService {
     private CustomerRepository customerRepository;
     @Autowired
     private AddressService addressService;
-
-    @PostConstruct
-    private void generateTestCustomer() {
-        Address regAddress = Address.builder()
-                .country("Россия")
-                .region("Московская область")
-                .city("Балашиха")
-                .street("Агрогородок")
-                .house("7")
-                .flat("77")
-                .created(LocalDateTime.now())
-                .modified(null)
-                .build();
-
-        Address actAddress = Address.builder()
-                .country("Россия")
-                .region("Московская область")
-                .city("Балашиха")
-                .street("Агрогородок")
-                .house("7")
-                .flat("77")
-                .created(LocalDateTime.now())
-                .modified(null)
-                .build();
-
-        addressService.addAddress(actAddress);
-        addressService.addAddress(regAddress);
-
-        Customer customer = Customer.builder()
-                .registeredAddress(regAddress)
-                .actualAddress(actAddress)
-                .firstName("Андрей")
-                .middleName("Сергеевич")
-                .lastName("Данилов")
-                .sex(Sex.MALE)
-                .build();
-
-        customerRepository.save(customer);
-    }
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
