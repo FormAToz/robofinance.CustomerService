@@ -10,14 +10,8 @@ import java.time.LocalDateTime;
 
 @Service
 public class AddressService {
-
     @Autowired
     private AddressRepository repository;
-
-    //TODO удалить после миграции
-    public void addAddress(Address address) {
-        repository.save(address);
-    }
 
     public Address getFromAddressRequest(AddressRequest request) {
         return repository

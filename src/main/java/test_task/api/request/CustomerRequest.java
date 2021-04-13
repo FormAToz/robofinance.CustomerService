@@ -1,8 +1,10 @@
 package test_task.api.request;
 
+import lombok.Builder;
 import lombok.Data;
 import test_task.model.enums.Sex;
 
+@Builder
 @Data
 public class CustomerRequest {
     private AddressRequest registeredAddress;

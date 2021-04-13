@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
-import java.util.Objects;
 
 @Getter
 @Setter
@@ -52,23 +51,4 @@ public class Customer {
     @ManyToOne
     @JoinColumn(name = "actual_address_id")
     private Address actualAddress;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return id.equals(customer.id) &&
-                lastName.equals(customer.lastName) &&
-                firstName.equals(customer.firstName) &&
-                middleName.equals(customer.middleName) &&
-                sex == customer.sex &&
-                registeredAddress.equals(customer.registeredAddress) &&
-                actualAddress.equals(customer.actualAddress);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, lastName, firstName, middleName, sex, registeredAddress, actualAddress);
-    }
 }

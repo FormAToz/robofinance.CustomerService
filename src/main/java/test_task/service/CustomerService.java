@@ -1,6 +1,6 @@
 package test_task.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import test_task.api.request.CustomerRequest;
 import test_task.api.request.FirstAndLastNameRequest;
@@ -10,13 +10,11 @@ import test_task.repository.CustomerRepository;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class CustomerService {
-
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private AddressService addressService;
+    private final CustomerRepository customerRepository;
+    private final AddressService addressService;
 
     public List<Customer> getAllCustomers() {
         return customerRepository.findAll();
@@ -73,7 +71,7 @@ public class CustomerService {
         String lastName = request.getLastName();
         String error = String.format("Клиента с именем %s %s не существует", firstName, lastName);
 
-        return customerRepository.findByFirstNameAndLastNameIgnoreCase(firstName, lastName)
+        return customerRepository.findByFirstNameIgnoreCaseAndLastNameIgnoreCase(firstName, lastName)
                 .orElseThrow(() -> new IllegalArgumentException(error));
     }
 }

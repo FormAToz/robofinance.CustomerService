@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    generate-ddl: false
+    show-sql: false
+    hibernate:
+      dialect: org.hibernate.dialect.H2Dialect
+      hbm2ddl:
+        auto: create
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:myDb;DB_CLOSE_DELAY=-1
+  flyway:
+    enabled: false

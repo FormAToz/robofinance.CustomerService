@@ -17,7 +17,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
@@ -57,24 +56,5 @@ public class Address {
     public String toString() {
         return String.format("%s, %s, %s, %s, %s, %s",
                 country, region, city, street, house, flat);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Address address = (Address) o;
-        return id.equals(address.id) &&
-                country.equals(address.country) &&
-                region.equals(address.region) &&
-                city.equals(address.city) &&
-                street.equals(address.street) &&
-                house.equals(address.house) &&
-                flat.equals(address.flat);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, country, region, city, street, house, flat);
     }
 }
